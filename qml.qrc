@@ -8,5 +8,6 @@
         <file>PageChillForm.ui.qml</file>
         <file>PageSparge.qml</file>
         <file>PageRecipe.qml</file>
+        <file>AddRemove.qml</file>
     </qresource>
 </RCC>

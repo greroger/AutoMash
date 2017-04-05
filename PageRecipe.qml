@@ -53,11 +53,14 @@ Item {
                     role: "grain"
                     title: qsTr("Grain")
                     width: grains.width - grainAmount.width - 2
+                    resizable: true
                 }
                 TableViewColumn {
                     id: grainAmount
                     role: "amount"
                     title: qsTr("Pounds")
+                    resizable: false
+                    width: 70
                 }
             }
             TableView {
@@ -68,45 +71,89 @@ Item {
                     id: hopname
                     role: "hop"
                     title: qsTr("Hop")
-                    width: hops.width - hopAmount.width - hopTime.width - 2
+                    width: hops.width - hopType.width - hopAmount.width - hopTime.width - 2
+                    resizable: true
                 }
+                TableViewColumn {
+                    id: hopType
+                    role: "type"
+                    title: qsTr("Type")
+                    resizable: false
+                    width: 50
+                    delegate: Item {
+                        ComboBox {
+                            anchors.verticalCenter: parent.verticalCenter
+                            model: ListModel {
+                                ListElement { text: qsTr("Whole") }
+                                ListElement { text: qsTr("Plug") }
+                                ListElement { text: qsTr("Pellet") }
+                                ListElement { text: qsTr("Shot") }
+                            }
+                        }
+                    }
+                }
+
                 TableViewColumn {
                     id: hopAmount
                     role: "amount"
                     title: qsTr("Ounces")
+                    resizable: false
+                    width: 60
                 }
                 TableViewColumn {
                     id: hopTime
                     role: "time"
-                    title: qsTr("Boil Time")
+                    title: qsTr("Minutes")
+                    resizable: false
+                    width: 70
                 }
             }
             RowLayout {
                 id: grainControls
-                Button {
-                    id: grainAdd
-                    text: "+"
-                }
-                Button {
-                    id: grainRemove
-                    text: "-"
+                Layout.alignment: Qt.AlignHLeft | Qt.AlignVCenter
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                layoutDirection: Qt.LeftToRight
+                AddRemove {
                 }
                 Text {
                     text: qsTr("Total:")
+                    Layout.alignment: Qt.AlignRight
                 }
                 Text {
                     id: grainTotal
+                    Layout.alignment: Qt.AlignRight
+                    Layout.maximumWidth:70
+                    Layout.minimumWidth:70
                 }
             }
             RowLayout {
                 id: hopControls
-                Button {
-                    id: hopAdd
-                    text: "+"
+                Layout.fillWidth: true
+                AddRemove {
                 }
-                Button {
-                    id: hopRemove
-                    text: "-"
+            }
+            Text {
+                text: qsTr("Mash Schedule:")
+                Layout.columnSpan: 2
+            }
+            TableView {
+                id: mashSchedule
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
+                TableViewColumn {
+                    id: rest
+                    role: "rest"
+                    title: qsTr("Rest")
+                    width: mashSchedule.width - restTime.width - 2
+                    resizable: true
+                }
+                TableViewColumn {
+                    id: restTime
+                    role: "restTime"
+                    title: qsTr("Time")
+                    resizable: false
+                    width: 50
                 }
             }
         }
