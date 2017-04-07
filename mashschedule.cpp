@@ -41,35 +41,40 @@ QVariant MashSchedule::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void MashSchedule::addRow(const QModelIndex &index)
+void MashSchedule::append(int row, const QString &name, uint temp, uint time)
 {
-    qDebug() << __PRETTY_FUNCTION__ << ": enter " << index;
-    if (index.isValid()) {
-        beginInsertRows(index.parent(), index.row() + 1, index.row() + 1);
-        rests.insert(index.row() + 1, Rest());
+    qDebug() << __PRETTY_FUNCTION__ << ": enter" << row << " " << name << " " << temp << " " << time;
+    if (row < 0 || rests.size() <= row) {
+        beginInsertRows(QModelIndex(), rests.size(), rests.size());
+        rests.push_back(Rest(name, temp, time));
         endInsertRows();
     } else {
-        beginInsertRows(index.parent(), rests.size(), rests.size());
-        rests.push_back(Rest());
+        ++row;
+        beginInsertRows(QModelIndex(), row, row);
+        rests.insert(row, Rest(name, temp, time));
         endInsertRows();
     }
 }
 
-void MashSchedule::removeRow(const QModelIndex &index)
+void MashSchedule::set(int row, const QString &name, uint temp, uint time)
 {
-    qDebug() << __PRETTY_FUNCTION__ << ": enter " << index;
-    if (index.isValid()) {
-        beginRemoveRows(index.parent(), index.row(), index.row());
-        rests.removeAt(index.row());
-        endRemoveRows();
+    qDebug() << __PRETTY_FUNCTION__ << ": enter" << row << " " << name << " " << temp << " " << time;
+    if (row < 0 || rests.size() <= row) {
+        return;
     }
+    rests.replace(row, Rest(name, temp, time));
+    dataChanged(index(row, 0), index(row, 0));
 }
 
-bool MashSchedule::setData(const QModelIndex &index, const QVariant &value, int role)
+void MashSchedule::remove(int row)
 {
-    qDebug() << __PRETTY_FUNCTION__ << ": enter " << index << " " << value << " " << role;
-    //emit dataChanged()
-    return true;
+    qDebug() << __PRETTY_FUNCTION__ << ": enter" << row;
+    if (row < 0 || rests.size() <= row) {
+        return;
+    }
+    beginRemoveColumns(QModelIndex(), row, row);
+    rests.removeAt(row);
+    endRemoveRows();
 }
 
 QHash<int, QByteArray> MashSchedule::roleNames() const

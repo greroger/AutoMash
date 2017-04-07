@@ -196,7 +196,7 @@ Item {
                     Layout.maximumWidth: addText.width + 15
                     //onClicked: mashModel.addRow(mashModel.index(mashTable.currentRow, 0))
                     onClicked:  {
-                        restDialog.open()
+                        restDialog.create()
                     }
                 }
                 Button {
@@ -219,46 +219,10 @@ Item {
         selectMultiple: false
         selectFolder: false
     }
-    Dialog {
+    RestDialog {
         id: restDialog
-        modality: Qt.WindowModal
-        standardButtons: StandardButton.Ok | StandardButton.Cancel | StandardButton.Apply
-        ColumnLayout {
-            //columns: 2
-            anchors.fill: parent
-            RowLayout {
-                Layout.fillWidth: true
-                Label {
-                    text: "Rest:"
-                }
-                TextField {
-                    placeholderText: "Name"
-                    horizontalAlignment: TextInput.AlignRight
-                    Layout.fillWidth: true
-                }
-            }
-            RowLayout {
-                Layout.fillWidth: true
-                Label {
-                    text: "Temp(˚F):"
-                }
-                TextField {
-                    placeholderText: "150"
-                    horizontalAlignment: TextInput.AlignRight
-                    Layout.fillWidth: true
-                }
-            }
-            RowLayout {
-                Layout.fillWidth: true
-                Label {
-                    text: "Time(minutes):"
-                }
-                TextField {
-                    placeholderText: "60"
-                    horizontalAlignment: TextInput.AlignRight
-                    Layout.fillWidth: true
-                }
-            }
+        onFinished: {
+            mashModel.append(mashTable.currentRow, name, temp, time)
         }
     }
 }

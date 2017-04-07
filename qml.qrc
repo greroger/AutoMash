@@ -9,5 +9,6 @@
         <file>PageSparge.qml</file>
         <file>PageRecipe.qml</file>
         <file>AddRemove.qml</file>
+        <file>RestDialog.qml</file>
     </qresource>
 </RCC>

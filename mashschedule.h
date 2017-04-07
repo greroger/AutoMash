@@ -63,12 +63,11 @@ public:
     Qt::ItemFlags flags(const QModelIndex &) const override { return Qt::ItemIsEditable; }
     int rowCount(const QModelIndex &/*parent*/ = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
+    Q_INVOKABLE void append(int row, const QString &name, uint temp, uint time);
+    Q_INVOKABLE void set(int row, const QString &name, uint temp, uint time);
+    Q_INVOKABLE void remove(int row);
 signals:
     void countChanged(int);
-public slots:
-    void addRow(const QModelIndex &index);
-    void removeRow(const QModelIndex &index);
 protected:
     QHash<int, QByteArray> roleNames() const override;
 private:
