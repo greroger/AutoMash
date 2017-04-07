@@ -15,9 +15,15 @@ Item {
                 Layout.fillWidth: true
             }
             Button {
-                id: loadRecipe
-                text: qsTr("Load")
+                id: openRecipe
+                text: qsTr("Open")
+                onClicked: {
+                    fileDialogRecipe.title = "Open Recipe File"
+                    fileDialogRecipe.selectExisting = true
+                    fileDialogRecipe.open()
+                }
             }
+
             Button {
                 id: saveRecipe
                 text: qsTr("Save")
@@ -138,22 +144,70 @@ Item {
                 Layout.columnSpan: 2
             }
             TableView {
-                id: mashSchedule
+                id: mashTable
                 Layout.columnSpan: 2
                 Layout.fillWidth: true
+                model: mashModel
                 TableViewColumn {
                     id: rest
-                    role: "rest"
+                    role: "name"
                     title: qsTr("Rest")
-                    width: mashSchedule.width - restTime.width - 2
+                    width: mashTable.width - restTemp.width - restTime.width - 2
                     resizable: true
                 }
                 TableViewColumn {
+                    id: restTemp
+                    role: "temp"
+                    title: qsTr("Temp")
+                    resizable: false
+                    width: 50
+                    /*
+                    delegate: Item {
+                        SpinBox {
+                            id: tempDel
+                            anchors.fill: parent
+                            decimals: 0
+                            maximumValue: 212
+                            minimumValue: 80
+                            value: styleData.value
+                            onValueChanged: {
+                                mashModel.setData(mashModel.index(styleData.row, 0), value, mashModel.temp)
+                            }
+                        }
+                    }
+                    */
+                }
+                TableViewColumn {
                     id: restTime
-                    role: "restTime"
+                    role: "time"
                     title: qsTr("Time")
                     resizable: false
                     width: 50
+                }
+            }
+            RowLayout {
+                Button {
+                    id: add
+                    Text {
+                        id: addText
+                        anchors.centerIn: parent
+                        text: "+"
+                    }
+                    Layout.maximumWidth: addText.width + 15
+                    //onClicked: mashModel.addRow(mashModel.index(mashTable.currentRow, 0))
+                    onClicked:  {
+                        restDialog.open()
+                    }
+                }
+                Button {
+                    id: remove
+                    Text {
+                        id: removeText
+                        anchors.centerIn: parent
+                        text: "-"
+                    }
+                    Layout.maximumWidth: removeText.width + 15
+                    onClicked: mashModel.removeRow(mashModel.index(mashTable.currentRow, 0))
                 }
             }
         }
@@ -164,5 +218,47 @@ Item {
         folder: shortcuts.home
         selectMultiple: false
         selectFolder: false
+    }
+    Dialog {
+        id: restDialog
+        modality: Qt.WindowModal
+        standardButtons: StandardButton.Ok | StandardButton.Cancel | StandardButton.Apply
+        ColumnLayout {
+            //columns: 2
+            anchors.fill: parent
+            RowLayout {
+                Layout.fillWidth: true
+                Label {
+                    text: "Rest:"
+                }
+                TextField {
+                    placeholderText: "Name"
+                    horizontalAlignment: TextInput.AlignRight
+                    Layout.fillWidth: true
+                }
+            }
+            RowLayout {
+                Layout.fillWidth: true
+                Label {
+                    text: "Temp(˚F):"
+                }
+                TextField {
+                    placeholderText: "150"
+                    horizontalAlignment: TextInput.AlignRight
+                    Layout.fillWidth: true
+                }
+            }
+            RowLayout {
+                Layout.fillWidth: true
+                Label {
+                    text: "Time(minutes):"
+                }
+                TextField {
+                    placeholderText: "60"
+                    horizontalAlignment: TextInput.AlignRight
+                    Layout.fillWidth: true
+                }
+            }
+        }
     }
 }
