@@ -9,11 +9,19 @@ Dialog {
     signal finished(string name, int temp, int time)
 
     function create() {
+        name.text = ""
+        temp.text = ""
+        time.text = ""
         dialog.title = qsTr("Add Rest");
         dialog.open();
     }
 
     function edit(rest) {
+        console.log("fuck shit! " , rest.name)
+        name.text = rest.name
+        temp.text = rest.temp
+        time.text = rest.time
+        console.log("fuck shit! " , rest)
     }
 
     modality: Qt.WindowModal

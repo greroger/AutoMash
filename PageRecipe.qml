@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.2
+import automash 1.0
 
 Item {
     ColumnLayout {
@@ -25,6 +26,10 @@ Item {
             }
 
             Button {
+                Rest {
+                    id: newOne
+                }
+
                 id: saveRecipe
                 text: qsTr("Save")
                 onClicked: {
@@ -161,21 +166,6 @@ Item {
                     title: qsTr("Temp")
                     resizable: false
                     width: 50
-                    /*
-                    delegate: Item {
-                        SpinBox {
-                            id: tempDel
-                            anchors.fill: parent
-                            decimals: 0
-                            maximumValue: 212
-                            minimumValue: 80
-                            value: styleData.value
-                            onValueChanged: {
-                                mashModel.setData(mashModel.index(styleData.row, 0), value, mashModel.temp)
-                            }
-                        }
-                    }
-                    */
                 }
                 TableViewColumn {
                     id: restTime
@@ -194,9 +184,14 @@ Item {
                         text: "+"
                     }
                     Layout.maximumWidth: addText.width + 15
-                    //onClicked: mashModel.addRow(mashModel.index(mashTable.currentRow, 0))
                     onClicked:  {
-                        restDialog.create()
+                        addDialog.create()
+                    }
+                    RestDialog {
+                        id: addDialog
+                        onFinished: {
+                            mashModel.append(mashTable.currentRow, name, temp, time)
+                        }
                     }
                 }
                 Button {
@@ -207,7 +202,24 @@ Item {
                         text: "-"
                     }
                     Layout.maximumWidth: removeText.width + 15
-                    onClicked: mashModel.removeRow(mashModel.index(mashTable.currentRow, 0))
+                    onClicked: mashModel.remove(mashTable.currentRow)
+                }
+                Button {
+                    id: edit
+                    Text {
+                        anchors.centerIn: parent
+                        text: "Edit"
+                    }
+                    Layout.maximumWidth: addText.width + 15
+                    onClicked:  {
+                        setDialog.edit(mashModel.get(mashTable.currentRow))
+                    }
+                    RestDialog {
+                        id: setDialog
+                        onFinished: {
+                            mashModel.set(mashTable.currentRow, name, temp, time)
+                        }
+                    }
                 }
             }
         }
@@ -219,10 +231,10 @@ Item {
         selectMultiple: false
         selectFolder: false
     }
-    RestDialog {
-        id: restDialog
-        onFinished: {
-            mashModel.append(mashTable.currentRow, name, temp, time)
-        }
+    Rest {
+        id: crap
+        name: "fuck"
+        temp: 180
+        time: 60
     }
 }
