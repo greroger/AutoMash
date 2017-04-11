@@ -165,6 +165,7 @@ Item {
                     role: "temp"
                     title: qsTr("Temp")
                     resizable: false
+                    horizontalAlignment: Text.AlignRight
                     width: 50
                 }
                 TableViewColumn {
@@ -172,10 +173,13 @@ Item {
                     role: "time"
                     title: qsTr("Time")
                     resizable: false
-                    width: 50
+                    horizontalAlignment: Text.AlignRight
+                    width: 75
                 }
             }
             RowLayout {
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
                 Button {
                     id: add
                     Text {
@@ -210,7 +214,7 @@ Item {
                         anchors.centerIn: parent
                         text: "Edit"
                     }
-                    Layout.maximumWidth: addText.width + 15
+                    //Layout.maximumWidth: addText.width
                     onClicked:  {
                         setDialog.edit(mashModel.get(mashTable.currentRow))
                     }
@@ -221,6 +225,17 @@ Item {
                         }
                     }
                 }
+                Label {
+                    Layout.fillWidth: true
+                }
+                Label {
+                    text: qsTr("Mash Time:")
+                }
+                Text {
+                    text: String(mashModel.totalTime)
+                    Layout.minimumWidth: 50
+                    horizontalAlignment: Text.AlignRight
+                }
             }
         }
 
@@ -230,11 +245,5 @@ Item {
         folder: shortcuts.home
         selectMultiple: false
         selectFolder: false
-    }
-    Rest {
-        id: crap
-        name: "fuck"
-        temp: 180
-        time: 60
     }
 }

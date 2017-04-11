@@ -31,3 +31,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     mashschedule.h
+
+macx: LIBS += -L/opt/local/lib/ -lboost_date_time-mt
+
+INCLUDEPATH += /opt/local/include
+DEPENDPATH += /opt/local/include

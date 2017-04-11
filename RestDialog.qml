@@ -12,7 +12,7 @@ Dialog {
         name.text = ""
         temp.text = ""
         time.text = ""
-        dialog.title = qsTr("Add Rest");
+        dialog.title = qsTr("Add Rest")
         dialog.open();
     }
 
@@ -22,6 +22,8 @@ Dialog {
         temp.text = rest.temp
         time.text = rest.time
         console.log("fuck shit! " , rest)
+        dialog.title = qsTr("Edit Rest")
+        dialog.open()
     }
 
     modality: Qt.WindowModal

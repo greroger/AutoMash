@@ -1,48 +1,55 @@
 #ifndef MASHSCHEDULE_H
 #define MASHSCHEDULE_H
 
+#include <string>
 #include <vector>
 #include <QAbstractListModel>
 #include <QObject>
 #include <QString>
+#include <QDebug>
+#include <boost/date_time/posix_time/posix_time.hpp>
+
+using namespace boost::posix_time;
+
+inline QString toQString(const time_duration &t);
 
 class Rest : public QObject
 {
     Q_OBJECT
 public:
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
-    Q_PROPERTY(int temp READ temp WRITE temp NOTIFY tempChanged)
-    Q_PROPERTY(int time READ time WRITE time NOTIFY timeChanged)
+    Q_PROPERTY(double temp READ temp WRITE temp NOTIFY tempChanged)
+    Q_PROPERTY(QString time READ timeQString WRITE time NOTIFY timeChanged)
     typedef std::shared_ptr<Rest> Ptr;
 
 public:
     explicit Rest(QObject *parent = 0);
-    Rest(const QString &name, uint temp, uint time, QObject *parent = 0);
+    Rest(const QString &name, int temp, const time_duration &time, QObject *parent = 0);
+    Rest(const QString &name, int temp, const QString &time, QObject *parent = 0);
+    static Ptr create(const QString &name, int temp, const time_duration &time, QObject *parent = 0);
     virtual ~Rest() {}
 
     const QString& name() const { return name_; }
     void name(const QString &n) { if (n != name_) { name_ = n; emit nameChanged(name_); } }
-    int temp() const { return temp_; }
-    void temp(int t) { if (t != temp_) { temp_ = t; emit tempChanged(temp_); } }
-    int time() const { return time_; }
-    void time(int t) { if (t != time_) { time_ = t; emit timeChanged(time_); } }
-    operator QString() const
-    {
-        return name_ + ", " + QString().setNum(temp_) + ", " + QString().setNum(time_);
-    }
+    double temp() const { return temp_; }
+    void temp(double t) { if (t != temp_) { temp_ = t; emit tempChanged(temp_); } }
+    QString timeQString() const { return toQString(time_); }
+    const time_duration& time() const { return time_; }
+    void time(const QString &t) { }
 signals:
     void nameChanged(QString);
-    void tempChanged(int);
-    void timeChanged(int);
+    void tempChanged(double);
+    void timeChanged(QString);
 private:
     QString name_;
-    int temp_;
-    int time_;
+    double temp_;
+    time_duration time_;
 };
 
 class MashSchedule : public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(QString totalTime READ totalTime NOTIFY totalTimeChanged)
 public:
     enum Roles {
         NameRole = Qt::UserRole + 1,
@@ -53,20 +60,28 @@ public:
 
     MashSchedule(QObject *parent = 0);
     virtual ~MashSchedule() {}
-    //void addRest(const Rest &r) { rests.push_back(r); }
+
+    void addRest(const Rest::Ptr &r) { rests.push_back(r); recalc(); }
+
     Qt::ItemFlags flags(const QModelIndex &) const override { return Qt::ItemIsEditable; }
-    int rowCount(const QModelIndex &/*parent*/ = QModelIndex()) const override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    Q_INVOKABLE void append(int row, const QString &name, uint temp, uint time);
-    Q_INVOKABLE void set(int row, const QString &name, uint temp, uint time);
+
+    Q_INVOKABLE void append(int row, const QString &name, double temp, const QString &time);
+    Q_INVOKABLE void set(int row, const QString &name, double temp, const QString &time);
     Q_INVOKABLE void remove(int row);
     Q_INVOKABLE Rest* get(int row);
+
+    QString totalTime() const { return toQString(totalTime_); }
 signals:
     void countChanged(int);
+    void totalTimeChanged(QString);
 protected:
     QHash<int, QByteArray> roleNames() const override;
 private:
+    void recalc();
     std::vector<Rest::Ptr> rests;
+    time_duration totalTime_;
 };
 
 #endif // MASHSCHEDULE_H
