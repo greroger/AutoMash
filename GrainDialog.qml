@@ -6,22 +6,20 @@ import QtQuick.Layouts 1.1
 Dialog {
     id: dialog
 
-    signal finished(string name, int temp, int time)
+    signal finished(string name, int amount)
 
     function create() {
         name.text = ""
-        temp.text = ""
-        time.text = ""
-        dialog.title = qsTr("Add Rest")
+        amount.text = ""
+        dialog.title = qsTr("Add Grain")
         dialog.open()
         name.focus = true
     }
 
-    function edit(rest) {
-        name.text = rest.name
-        temp.text = rest.temp
-        time.text = rest.time
-        dialog.title = qsTr("Edit Rest")
+    function edit(grain) {
+        name.text = grain.name
+        amount.text = grain.amount
+        dialog.title = qsTr("Edit Grain")
         dialog.open()
         name.focus = true
     }
@@ -33,7 +31,7 @@ Dialog {
         RowLayout {
             Layout.fillWidth: true
             Label {
-                text: "Rest:"
+                text: "Grain:"
             }
             TextField {
                 id: name
@@ -45,29 +43,17 @@ Dialog {
         RowLayout {
             Layout.fillWidth: true
             Label {
-                text: "Temp(˚F):"
+                text: "Amount(lbs):"
             }
             TextField {
-                id: temp
-                placeholderText: "150"
+                id: amount
+                placeholderText: "10.0"
                 horizontalAlignment: TextInput.AlignRight
                 Layout.fillWidth: true
                 inputMethodHints: Qt.ImhDigitsOnly
             }
         }
-        RowLayout {
-            Layout.fillWidth: true
-            Label {
-                text: "Time(minutes):"
-            }
-            TextField {
-                id: time
-                placeholderText: "60"
-                horizontalAlignment: TextInput.AlignRight
-                Layout.fillWidth: true
-            }
-        }
     }
-    onAccepted: finished(name.text, temp.text, time.text)
+    onAccepted: finished(name.text, amount.text)
 }
 

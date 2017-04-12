@@ -3,7 +3,9 @@ QT += qml quick
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    mashschedule.cpp
+    mashschedule.cpp \
+    grainbill.cpp \
+    hops.cpp
 
 RESOURCES += qml.qrc
 
@@ -30,7 +32,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    mashschedule.h
+    mashschedule.h \
+    grainbill.h \
+    hops.h \
+    helpers.h
 
 macx: LIBS += -L/opt/local/lib/ -lboost_date_time-mt
 

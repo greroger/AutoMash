@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Dialogs 1.2
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
+import automash 1.0
 
 Dialog {
     id: dialog
@@ -10,18 +11,20 @@ Dialog {
 
     function create() {
         name.text = ""
-        temp.text = ""
+        type.currentIndex = 0
+        amount.text = ""
         time.text = ""
-        dialog.title = qsTr("Add Rest")
+        dialog.title = qsTr("Add Hop")
         dialog.open()
         name.focus = true
     }
 
-    function edit(rest) {
-        name.text = rest.name
-        temp.text = rest.temp
-        time.text = rest.time
-        dialog.title = qsTr("Edit Rest")
+    function edit(hop) {
+        name.text = hop.name
+        type.text = hop.type
+        amount.text = hop.amount
+        time.text = hop.time
+        dialog.title = qsTr("Edit Hop")
         dialog.open()
         name.focus = true
     }
@@ -29,11 +32,12 @@ Dialog {
     modality: Qt.WindowModal
     standardButtons: StandardButton.Ok | StandardButton.Cancel | StandardButton.Apply
     ColumnLayout {
+        //columns: 2
         anchors.fill: parent
         RowLayout {
             Layout.fillWidth: true
             Label {
-                text: "Rest:"
+                text: "Hop:"
             }
             TextField {
                 id: name
@@ -45,11 +49,22 @@ Dialog {
         RowLayout {
             Layout.fillWidth: true
             Label {
-                text: "Temp(˚F):"
+                text: "Type:"
+            }
+            ComboBox {
+                id: type
+                Layout.fillWidth: true
+                model: Hop.type
+            }
+        }
+        RowLayout {
+            Layout.fillWidth: true
+            Label {
+                text: "Amount(oz):"
             }
             TextField {
-                id: temp
-                placeholderText: "150"
+                id: amount
+                placeholderText: "10"
                 horizontalAlignment: TextInput.AlignRight
                 Layout.fillWidth: true
                 inputMethodHints: Qt.ImhDigitsOnly
@@ -62,12 +77,12 @@ Dialog {
             }
             TextField {
                 id: time
-                placeholderText: "60"
+                placeholderText: "10"
                 horizontalAlignment: TextInput.AlignRight
                 Layout.fillWidth: true
+                inputMethodHints: Qt.ImhDigitsOnly
             }
         }
     }
-    onAccepted: finished(name.text, temp.text, time.text)
+    onAccepted: finished(name.text, type.text, amount.text, time.text)
 }
-

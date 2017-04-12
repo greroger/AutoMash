@@ -1,5 +1,4 @@
-#ifndef MASHSCHEDULE_H
-#define MASHSCHEDULE_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -7,11 +6,8 @@
 #include <QObject>
 #include <QString>
 #include <QDebug>
-#include <boost/date_time/posix_time/posix_time.hpp>
 
-using namespace boost::posix_time;
-
-inline QString toQString(const time_duration &t);
+#include "helpers.h"
 
 class Rest : public QObject
 {
@@ -35,7 +31,7 @@ public:
     void temp(double t) { if (t != temp_) { temp_ = t; emit tempChanged(temp_); } }
     QString timeQString() const { return toQString(time_); }
     const time_duration& time() const { return time_; }
-    void time(const QString &t) { }
+    void time(const QString &t);
 signals:
     void nameChanged(QString);
     void tempChanged(double);
@@ -63,7 +59,6 @@ public:
 
     void addRest(const Rest::Ptr &r) { rests.push_back(r); recalc(); }
 
-    Qt::ItemFlags flags(const QModelIndex &) const override { return Qt::ItemIsEditable; }
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
@@ -83,5 +78,3 @@ private:
     std::vector<Rest::Ptr> rests;
     time_duration totalTime_;
 };
-
-#endif // MASHSCHEDULE_H

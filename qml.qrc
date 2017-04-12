@@ -8,5 +8,10 @@
         <file>PageRecipe.qml</file>
         <file>AddRemove.qml</file>
         <file>RestDialog.qml</file>
+        <file>GrainBill.qml</file>
+        <file>Hops.qml</file>
+        <file>MashSchedule.qml</file>
+        <file>GrainDialog.qml</file>
+        <file>HopDialog.qml</file>
     </qresource>
 </RCC>

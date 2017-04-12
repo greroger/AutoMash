@@ -2,15 +2,6 @@
 #include <QDebug>
 #include "mashschedule.h"
 
-QString toQString(const time_duration &t)
-{
-    return QString("%1").arg(t.total_seconds() / 60);
-    if (t.hours()) {
-        return QString("%1:%2").arg(t.hours()).arg(t.minutes(), 2, 10, QChar('0'));
-    }
-    return QString("%1").arg(t.minutes());
-}
-
 Rest::Rest(QObject *parent)
     : QObject(parent)
     , name_("Rest")
@@ -39,6 +30,15 @@ Rest::Ptr Rest::create(const QString &name, int temp, const time_duration &time,
 {
     Ptr p(new Rest(name, temp, time, parent));
     return p;
+}
+
+void Rest::time(const QString &t)
+{
+    time_duration temp = minutes(t.toLong());
+    if (temp != time_) {
+        time_ = temp;
+        emit(timeChanged(toQString(time_)));
+    }
 }
 
 MashSchedule::MashSchedule(QObject *parent)
