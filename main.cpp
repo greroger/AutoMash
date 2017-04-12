@@ -25,16 +25,18 @@ int main(int argc, char *argv[])
     qmlRegisterType<Hop>("automash", 1, 0, "Hop");
 
     MashSchedule mashSchedule;
-    mashSchedule.add(Rest::create("Alpha-amylase", 158, minutes(60)));
-    mashSchedule.add(Rest::create("Mash Out", 168, minutes(10)));
+    mashSchedule.add(Rest::create("Mash", 152, minutes(60)));
+    mashSchedule.add(Rest::create("Mash Out", 170, minutes(10)));
 
     GrainBill grainBill;
-    grainBill.add(Grain::create("Dried shit", 12.3));
-    grainBill.add(Grain::create("Dead cheese", 8.2));
+    grainBill.add(Grain::create("British pale ale malt", 6.4));
+    grainBill.add(Grain::create("British crystal malt", 0.3125));
+    grainBill.add(Grain::create("Flaked maize", 0.3125));
+    grainBill.add(Grain::create("Flaked barley", 0.3125));
 
     Hops hops;
-    hops.add(Hop::create("Fuggles", 1.5, minutes(60)));
-    hops.add(Hop::create("Fuggles", 1, minutes(1)));
+    hops.add(Hop::create("Target", 1, minutes(75)));
+    hops.add(Hop::create("Progress", 1, minutes(5)));
 
     qApp->setQuitOnLastWindowClosed(true);
     QQmlApplicationEngine engine;

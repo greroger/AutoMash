@@ -51,6 +51,15 @@ Hops::Hops(QObject *parent)
 
 }
 
+void Hops::add(const Hop::Ptr &p)
+{
+    beginResetModel();
+    hops.push_back(p);
+    sort();
+    endResetModel();
+    recalc();
+}
+
 QVariant Hops::data(const QModelIndex &index, int role) const
 {
     switch (role) {
@@ -68,16 +77,10 @@ QVariant Hops::data(const QModelIndex &index, int role) const
 
 void Hops::append(int row, const QString &name, double amount, QString time)
 {
-    if (row < 0 || hops.size() <= row) {
-        beginInsertRows(QModelIndex(), hops.size(), hops.size());
-        hops.push_back(Hop::create(name, amount, time, this));
-        endInsertRows();
-    } else {
-        ++row;
-        beginInsertRows(QModelIndex(), row, row);
-        hops.insert(hops.begin() + row, Hop::create(name, amount, time, this));
-        endInsertRows();
-    }
+    beginResetModel();
+    hops.push_back(Hop::create(name, amount, time, this));
+    sort();
+    endResetModel();
     recalc();
 }
 
@@ -86,8 +89,10 @@ void Hops::set(int row, const QString &name, double amount, QString time)
     if (row < 0 || hops.size() <= row) {
         return;
     }
+    beginResetModel();
     hops[row].reset(new Hop(name, amount, time, this));
-    dataChanged(index(row, 0), index(row, 0));
+    sort();
+    endResetModel();
     recalc();
 }
 
@@ -99,6 +104,7 @@ void Hops::remove(int row)
     beginRemoveColumns(QModelIndex(), row, row);
     hops.erase(hops.begin() + row);
     endRemoveRows();
+    sort();
     recalc();
 }
 

@@ -53,6 +53,14 @@ private:
     time_duration time_;
 };
 
+inline bool operator<(const Hop::Ptr &lhs, const Hop::Ptr &rhs)
+{
+    if (lhs->time() != rhs->time()) {
+        return lhs->time() > rhs->time();
+    }
+    return lhs->name() < rhs->name();
+}
+
 class Hops : public QAbstractListModel
 {
     Q_OBJECT
@@ -68,7 +76,7 @@ public:
 public:
     Hops(QObject *parent = NULL);
     virtual ~Hops() {}
-    void add(const Hop::Ptr &p) { hops.push_back(p); emit(countChanged(hops.size())); recalc(); }
+    void add(const Hop::Ptr &p);
     int rowCount(const QModelIndex &) const override { return hops.size(); }
     QVariant data(const QModelIndex &index, int role) const;
 
@@ -84,6 +92,7 @@ signals:
 protected:
     QHash<int, QByteArray> roleNames() const;
 private:
+    void sort() { std::sort(hops.begin(), hops.end()); }
     void recalc();
     std::vector<Hop::Ptr> hops;
     time_duration min_boil;

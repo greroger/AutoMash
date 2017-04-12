@@ -49,7 +49,6 @@ Item {
             columns: 2
             GrainBill {
                 Layout.columnSpan: 1
-                Layout.preferredWidth: ingrediants.width / 2
             }
             Hops {
                 Layout.columnSpan: 1
