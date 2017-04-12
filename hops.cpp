@@ -1,31 +1,29 @@
 #include "hops.h"
 
-Hop::Hop(QString name, Type type, double amount, time_duration time, QObject *parent)
+Hop::Hop(QString name, double amount, time_duration time, QObject *parent)
     : QObject(parent)
     , name_(name)
-    , type_(type)
     , amount_(amount)
     , time_(time)
 {
 }
 
-Hop::Hop(QString name, Type type, double amount, QString time, QObject *parent)
+Hop::Hop(QString name, double amount, QString time, QObject *parent)
     : QObject(parent)
     , name_(name)
-    , type_(type)
     , amount_(amount)
     , time_(minutes(time.toLong()))
 {
 }
 
-Hop::Ptr Hop::create(QString name, Type type, double amount, time_duration time, QObject *parent)
+Hop::Ptr Hop::create(QString name, double amount, time_duration time, QObject *parent)
 {
-    return Ptr(new Hop(name, type, amount, time, parent));
+    return Ptr(new Hop(name, amount, time, parent));
 }
 
-Hop::Ptr Hop::create(QString name, Type type, double amount, QString time, QObject *parent)
+Hop::Ptr Hop::create(QString name, double amount, QString time, QObject *parent)
 {
-    return Ptr(new Hop(name, type, amount, time, parent));
+    return Ptr(new Hop(name, amount, time, parent));
 }
 
 void Hop::time(const QString &t)
@@ -68,27 +66,27 @@ QVariant Hops::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void Hops::append(int row, const QString &name, Hop::Type type, double amount, QString time)
+void Hops::append(int row, const QString &name, double amount, QString time)
 {
     if (row < 0 || hops.size() <= row) {
         beginInsertRows(QModelIndex(), hops.size(), hops.size());
-        hops.push_back(Hop::create(name, type, amount, time, this));
+        hops.push_back(Hop::create(name, amount, time, this));
         endInsertRows();
     } else {
         ++row;
         beginInsertRows(QModelIndex(), row, row);
-        hops.insert(hops.begin() + row, Hop::create(name, type, amount, time, this));
+        hops.insert(hops.begin() + row, Hop::create(name, amount, time, this));
         endInsertRows();
     }
     recalc();
 }
 
-void Hops::set(int row, const QString &name, Hop::Type type, double amount, QString time)
+void Hops::set(int row, const QString &name, double amount, QString time)
 {
     if (row < 0 || hops.size() <= row) {
         return;
     }
-    hops[row].reset(new Hop(name, type, amount, time, this));
+    hops[row].reset(new Hop(name, amount, time, this));
     dataChanged(index(row, 0), index(row, 0));
     recalc();
 }

@@ -7,11 +7,10 @@ import automash 1.0
 Dialog {
     id: dialog
 
-    signal finished(string name, int temp, int time)
+    signal finished(string name, double amount, string time)
 
     function create() {
         name.text = ""
-        type.currentIndex = 0
         amount.text = ""
         time.text = ""
         dialog.title = qsTr("Add Hop")
@@ -21,7 +20,6 @@ Dialog {
 
     function edit(hop) {
         name.text = hop.name
-        type.text = hop.type
         amount.text = hop.amount
         time.text = hop.time
         dialog.title = qsTr("Edit Hop")
@@ -44,17 +42,6 @@ Dialog {
                 placeholderText: "Name"
                 horizontalAlignment: TextInput.AlignRight
                 Layout.fillWidth: true
-            }
-        }
-        RowLayout {
-            Layout.fillWidth: true
-            Label {
-                text: "Type:"
-            }
-            ComboBox {
-                id: type
-                Layout.fillWidth: true
-                model: Hop.type
             }
         }
         RowLayout {
@@ -84,5 +71,5 @@ Dialog {
             }
         }
     }
-    onAccepted: finished(name.text, type.text, amount.text, time.text)
+    onAccepted: finished(name.text, amount.text, time.text)
 }

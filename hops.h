@@ -10,7 +10,6 @@ class Hop : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
-    Q_PROPERTY(Type type READ type WRITE type NOTIFY typeChanged)
     Q_PROPERTY(double amount READ amount WRITE amount NOTIFY amountChanged)
     Q_PROPERTY(QString time READ timeQString WRITE time NOTIFY timeChanged)
 public:
@@ -23,10 +22,10 @@ public:
     Q_ENUM(Type);
 public:
     explicit Hop(QObject *parent = NULL) : QObject(parent), type_(Pellet), amount_(0) {}
-    explicit Hop(QString name, Type type, double amount, time_duration time, QObject *parent = NULL);
-    explicit Hop(QString name, Type type, double amount, QString time, QObject *parent = NULL);
-    static Ptr create(QString name, Type type, double amount, time_duration time, QObject *parent = NULL);
-    static Ptr create(QString name, Type type, double amount, QString time, QObject *parent = NULL);
+    explicit Hop(QString name, double amount, time_duration time, QObject *parent = NULL);
+    explicit Hop(QString name, double amount, QString time, QObject *parent = NULL);
+    static Ptr create(QString name, double amount, time_duration time, QObject *parent = NULL);
+    static Ptr create(QString name, double amount, QString time, QObject *parent = NULL);
     virtual ~Hop() {}
 
     const QString& name() const { return name_; }
@@ -69,16 +68,18 @@ public:
 public:
     Hops(QObject *parent = NULL);
     virtual ~Hops() {}
+    void add(const Hop::Ptr &p) { hops.push_back(p); emit(countChanged(hops.size())); recalc(); }
     int rowCount(const QModelIndex &) const override { return hops.size(); }
     QVariant data(const QModelIndex &index, int role) const;
 
-    Q_INVOKABLE void append(int row, const QString &name, Hop::Type type, double amount, QString time);
-    Q_INVOKABLE void set(int row, const QString &name, Hop::Type type, double amount, QString time);
+    Q_INVOKABLE void append(int row, const QString &name, double amount, QString time);
+    Q_INVOKABLE void set(int row, const QString &name, double amount, QString time);
     Q_INVOKABLE void remove(int row);
     Q_INVOKABLE Hop* get(int row);
 
     QString minimumBoil() const { return toQString(min_boil); }
 signals:
+    void countChanged(int);
     void minimumBoilChanged(QString);
 protected:
     QHash<int, QByteArray> roleNames() const;

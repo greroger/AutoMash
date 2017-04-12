@@ -57,7 +57,7 @@ public:
     MashSchedule(QObject *parent = 0);
     virtual ~MashSchedule() {}
 
-    void addRest(const Rest::Ptr &r) { rests.push_back(r); recalc(); }
+    void add(const Rest::Ptr &r) { rests.push_back(r); emit(countChanged(rests.size())); recalc(); }
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;

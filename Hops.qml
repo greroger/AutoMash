@@ -17,17 +17,10 @@ ColumnLayout {
         model: hops
         TableViewColumn {
             id: name
-            role: "hop"
+            role: "name"
             title: qsTr("Hop")
-            width: hopTable.width - type.width - amount.width - time.width - 2
+            width: hopTable.width - amount.width - time.width - 2
             resizable: true
-        }
-        TableViewColumn {
-            id: type
-            role: "type"
-            title: qsTr("Type")
-            resizable: false
-            width: 50
         }
         TableViewColumn {
             id: amount
@@ -60,7 +53,7 @@ ColumnLayout {
                 HopDialog {
                     id: addDialog
                     onFinished: {
-                        hops.append(hopTable.currentRow, name, type.currentIndex, amount, time)
+                        hops.append(hopTable.currentRow, name, amount, time)
                     }
                 }
         }
@@ -88,7 +81,7 @@ ColumnLayout {
             HopDialog {
                 id: setDialog
                 onFinished: {
-                    hops.set(hopTable.currentRow, name, temp, time)
+                    hops.set(hopTable.currentRow, name, amount, time)
                 }
             }
         }

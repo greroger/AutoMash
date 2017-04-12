@@ -43,7 +43,7 @@ public:
     GrainBill(QObject *parent = 0);
     virtual ~GrainBill() {}
 
-    void addGrain(const Grain::Ptr &r) { grains.push_back(r); recalc(); emit(countChanged(grains.size())); }
+    void add(const Grain::Ptr &r) { grains.push_back(r); recalc(); emit(countChanged(grains.size())); }
 
     int rowCount(const QModelIndex &) const override { return grains.size(); }
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
