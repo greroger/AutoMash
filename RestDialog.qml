@@ -6,7 +6,7 @@ import QtQuick.Layouts 1.1
 Dialog {
     id: dialog
 
-    signal finished(string name, int temp, int time)
+    signal finished(string name, int temp, string time)
 
     function create() {
         name.text = ""

@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "grainbill.h"
 
 GrainBill::GrainBill(QObject *parent)
@@ -36,6 +37,7 @@ void GrainBill::set(int row, const QString &name, double amount)
     if (row < 0 || grains.size() <= row) {
         return;
     }
+    qDebug() << __PRETTY_FUNCTION__ << ": " << name << ", " << amount;
     grains[row].reset(new Grain(name, amount, this));
     dataChanged(index(row, 0), index(row, 0));
     recalc();
