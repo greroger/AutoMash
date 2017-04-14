@@ -7,6 +7,7 @@ import automash 1.0
 Item {
     ColumnLayout {
         anchors.fill: parent
+        anchors.margins: 10
         RowLayout {
             id: file
             Layout.fillWidth: true

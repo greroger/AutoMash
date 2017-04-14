@@ -12,15 +12,10 @@ ApplicationWindow {
         id: swipeView
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
-
         PageRecipe {
         }
 
-        Page {
-            Label {
-                text: qsTr("Strike")
-                anchors.centerIn: parent
-            }
+        PageStrike {
         }
 
         Page {

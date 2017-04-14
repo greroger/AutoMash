@@ -78,7 +78,7 @@ public:
     virtual ~Hops() {}
     void add(const Hop::Ptr &p);
     int rowCount(const QModelIndex &) const override { return hops.size(); }
-    QVariant data(const QModelIndex &index, int role) const;
+    QVariant data(const QModelIndex &index, int role) const override;
 
     Q_INVOKABLE void append(int row, const QString &name, double amount, QString time);
     Q_INVOKABLE void set(int row, const QString &name, double amount, QString time);
@@ -90,7 +90,7 @@ signals:
     void countChanged(int);
     void minimumBoilChanged(QString);
 protected:
-    QHash<int, QByteArray> roleNames() const;
+    QHash<int, QByteArray> roleNames() const override;
 private:
     void sort() { std::sort(hops.begin(), hops.end()); }
     void recalc();

@@ -13,5 +13,7 @@
         <file>MashSchedule.qml</file>
         <file>GrainDialog.qml</file>
         <file>HopDialog.qml</file>
+        <file>PumpPanel.qml</file>
+        <file>PageStrike.qml</file>
     </qresource>
 </RCC>

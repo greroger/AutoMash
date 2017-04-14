@@ -8,6 +8,7 @@
 #include "mashschedule.h"
 #include "grainbill.h"
 #include "hops.h"
+#include "pump.h"
 
 int main(int argc, char *argv[])
 {
@@ -38,12 +39,19 @@ int main(int argc, char *argv[])
     hops.add(Hop::create("Target", 1, minutes(75)));
     hops.add(Hop::create("Progress", 1, minutes(5)));
 
+    Pump hltPump("HLT Pump", 0x69);
+    hltPump.setDesiredFlow(20);
+    Pump mashPump("Mash Pump", 0x6a);
+
     qApp->setQuitOnLastWindowClosed(true);
     QQmlApplicationEngine engine;
 
     engine.rootContext()->setContextProperty("mashSchedule", &mashSchedule);
     engine.rootContext()->setContextProperty("grainBill", &grainBill);
     engine.rootContext()->setContextProperty("hops", &hops);
+    engine.rootContext()->setContextProperty("hops", &hops);
+    engine.rootContext()->setContextProperty("hltPump", &hltPump);
+    engine.rootContext()->setContextProperty("mashPump", &mashPump);
 
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 

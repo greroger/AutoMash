@@ -5,7 +5,9 @@ CONFIG += c++11
 SOURCES += main.cpp \
     mashschedule.cpp \
     grainbill.cpp \
-    hops.cpp
+    hops.cpp \
+    pump.cpp \
+    i2c.cpp
 
 RESOURCES += qml.qrc
 
@@ -35,7 +37,9 @@ HEADERS += \
     mashschedule.h \
     grainbill.h \
     hops.h \
-    helpers.h
+    helpers.h \
+    pump.h \
+    i2c.h
 
 macx: LIBS += -L/opt/local/lib/ -lboost_date_time-mt
 
