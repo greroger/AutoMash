@@ -12,15 +12,16 @@ Item {
         anchors.margins: 10
 
         ColumnLayout {
+            Layout.alignment: Qt.AlignTop
             Label {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 text: qsTr("Recirc HLT")
-                font.pointSize: 20
+                font.pixelSize: 19
                 font.bold: true
             }
             RowLayout {
                 Text {
-                    text: qsTr("Fill HLT to ")
+                    text: qsTr("Fill HLT to:")
                 }
                 Text {
                     text: grainBill.totalWater
@@ -49,8 +50,9 @@ Item {
             }
         }
         ColumnLayout {
+            Layout.alignment: Qt.AlignTop
             Label {
-                text: qsTr("Recirc HLT")
+                text: qsTr("Fill Deadspace")
                 font.pointSize: 20
                 font.bold: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -74,8 +76,9 @@ Item {
             }
         }
         ColumnLayout {
+            Layout.alignment: Qt.AlignTop
             Label {
-                text: qsTr("Recirc HLT")
+                text: qsTr("Dough In")
                 font.pointSize: 20
                 font.bold: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter

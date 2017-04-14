@@ -12,10 +12,10 @@ ApplicationWindow {
         id: swipeView
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
-        PageRecipe {
+        RecipePage {
         }
 
-        PageStrike {
+        StrikePage {
         }
 
         Page {
@@ -25,7 +25,7 @@ ApplicationWindow {
             }
         }
 
-        PageSparge {
+        SpargePage {
         }
 
         Page {
@@ -35,7 +35,11 @@ ApplicationWindow {
             }
         }
 
-        PageChill {
+        Page {
+            Label {
+                text: qsTr("Chill")
+                anchors.centerIn: parent
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.2
 import automash 1.0
@@ -39,6 +40,7 @@ ColumnLayout {
                 anchors.centerIn: parent
                 text: "+"
             }
+            Layout.maximumHeight: addText.height + 15
             Layout.maximumWidth: addText.width + 15
             onClicked:  {
                 addDialog.create()

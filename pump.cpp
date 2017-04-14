@@ -12,6 +12,8 @@ Pump::Pump(const QString &name, uint8_t address, QObject *parent)
     , actualFlow_(0)
     , desiredFlow_(0)
 {
+    connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
+    timer.start(100);
 }
 
 double Pump::actualFlow() const
@@ -59,4 +61,9 @@ void Pump::stop()
     qDebug() << __PRETTY_FUNCTION__;
     status.reset(Running);
     emit runningChanged(running());
+}
+
+void Pump::update()
+{
+    //qDebug() << __PRETTY_FUNCTION__;
 }

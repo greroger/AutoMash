@@ -2,10 +2,8 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
-        <file>PageChill.qml</file>
-        <file>PageChillForm.ui.qml</file>
-        <file>PageSparge.qml</file>
-        <file>PageRecipe.qml</file>
+        <file>SpargePage.qml</file>
+        <file>RecipePage.qml</file>
         <file>AddRemove.qml</file>
         <file>RestDialog.qml</file>
         <file>GrainBill.qml</file>
@@ -14,6 +12,7 @@
         <file>GrainDialog.qml</file>
         <file>HopDialog.qml</file>
         <file>PumpPanel.qml</file>
-        <file>PageStrike.qml</file>
+        <file>StrikePage.qml</file>
+        <file>SmallButton.qml</file>
     </qresource>
 </RCC>

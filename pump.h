@@ -3,7 +3,7 @@
 #include <atomic>
 
 #include <QObject>
-#include <QFlags>
+#include <QTimer>
 
 #include "helpers.h"
 
@@ -48,6 +48,7 @@ public slots:
     void start();
     void stop();
     void resetPumped() { pumped_ = 0; emit pumpedChanged(pumped_); }
+    void update();
 
 private:
     const QString name_;
@@ -56,5 +57,6 @@ private:
     std::atomic<uint8_t> desiredFlow_;
     Status status;
     double pumped_;
+    QTimer timer;
 };
 

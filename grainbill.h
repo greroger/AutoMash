@@ -13,14 +13,18 @@ public:
     typedef std::shared_ptr<Grain> Ptr;
 public:
     Grain(QObject *parent = NULL) : QObject(parent) {}
-    Grain(const QString &n, double p, QObject *parent = NULL) : QObject(parent), name_(n), amount_(p) {}
-    static Ptr create(const QString &n, double p, QObject *parent = NULL) { return Ptr(new Grain(n, p, parent)); }
+    Grain(const QString &n, double p, QObject *parent = NULL)
+        : QObject(parent), name_(n), amount_(p) {}
+    static Ptr create(const QString &n, double p, QObject *parent = NULL)
+    { return Ptr(new Grain(n, p, parent)); }
 
     const QString& name() const { return name_; }
-    void name(const QString &n) { if (n != name_) { name_ = n; emit(nameChanged(name_)); } }
+    void name(const QString &n) { if (n != name_)
+        { name_ = n; emit(nameChanged(name_)); } }
 
     double amount() const { return amount_; }
-    void amount(const double p) { if (amount_ != p) { amount_ = p; emit(amountChanged(amount_)); } }
+    void amount(const double p)
+    { if (amount_ != p) { amount_ = p; emit(amountChanged(amount_)); } }
 signals:
     void nameChanged(QString);
     void amountChanged(double);
@@ -43,7 +47,8 @@ public:
     GrainBill(QObject *parent = 0);
     virtual ~GrainBill() {}
 
-    void add(const Grain::Ptr &r) { grains.push_back(r); recalc(); emit(countChanged(grains.size())); }
+    void add(const Grain::Ptr &r)
+    { grains.push_back(r); recalc(); emit(countChanged(grains.size())); }
 
     int rowCount(const QModelIndex &) const override { return grains.size(); }
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
