@@ -9,3 +9,8 @@ Will use Arduino for local PID controls on pumps and RIMS tube.
 I2C to provide communication between Raspberry Pi and Arduino's.
 
 Working on Arduino PID TRIAC phase control of pump's and heater.
+
+Heater will be straight pid temperature control.
+
+Pumps will use Hall effect flow sensor for pid control of flow rate.
+Also add option of temperature controled flow rate for counter flow chiller.
