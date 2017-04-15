@@ -7,7 +7,8 @@ SOURCES += main.cpp \
     grainbill.cpp \
     hops.cpp \
     pump.cpp \
-    i2c.cpp
+    i2c.cpp \
+    automash.cpp
 
 RESOURCES += qml.qrc
 
@@ -39,7 +40,8 @@ HEADERS += \
     hops.h \
     helpers.h \
     pump.h \
-    i2c.h
+    i2c.h \
+    automash.h
 
 macx: LIBS += -L/opt/local/lib/ -lboost_date_time-mt
 
