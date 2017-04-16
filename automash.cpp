@@ -6,7 +6,7 @@
 
 AutoMash::AutoMash(QObject *parent)
     : QObject(parent)
-    , hltPump("HLT Pump", 0x69)
+    , hltPump("HLT Pump", 0x14)
     , mashPump("Mash Pump", 0x6a)
 {
     qmlRegisterType<Rest>("automash", 1, 0, "Rest");

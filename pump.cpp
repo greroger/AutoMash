@@ -1,16 +1,22 @@
 #include <thread>
 #include <chrono>
+#include <iostream>
+#include <iomanip>
 
 #include <QDebug>
 
 #include "pump.h"
 
+using namespace std;
+
 Pump::Pump(const QString &name, uint8_t address, QObject *parent)
     : QObject(parent)
+    , I2C(address)
     , name_(name)
     , address_(address)
     , actualFlow_(0)
     , desiredFlow_(0)
+    , pumped_(0)
 {
     connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
     timer.start(100);
@@ -46,14 +52,21 @@ void Pump::setDesiredFlow(double f)
 
 void Pump::start()
 {
+    cout << __PRETTY_FUNCTION__;
     status.set(Running);
     emit runningChanged(running());
-    std::thread t([this]() {
-        std::this_thread::sleep_for(std::chrono::seconds(5));
-        stop();
-        actualFlow(0);
-    });
-    t.detach();
+    uint16_t crap = read(0x0);
+    cout << __PRETTY_FUNCTION__ << ": " << hex << crap << dec << endl;
+    crap = read(0x1);
+    cout << __PRETTY_FUNCTION__ << ": " << hex << crap << dec << endl;
+    crap = read(0x2);
+    cout << __PRETTY_FUNCTION__ << ": " << hex << crap << dec << endl;
+    //thread t([this]() {
+        //this_thread::sleep_for(chrono::seconds(5));
+        //stop();
+        //actualFlow(0);
+    //});
+    //t.detach();
 }
 
 void Pump::stop()

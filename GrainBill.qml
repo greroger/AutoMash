@@ -13,8 +13,9 @@ ColumnLayout {
     }
     TableView {
         id: grainTable
-        Layout.fillWidth: true
-        Layout.fillHeight: true
+        anchors.fill: parent
+        //Layout.fillWidth: true
+        //Layout.fillHeight: true
         model: grainBill
         TableViewColumn {
             id: name

@@ -6,8 +6,9 @@
 #include <QTimer>
 
 #include "helpers.h"
+#include "i2c.h"
 
-class Pump : public QObject
+class Pump : public QObject, private I2C
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)

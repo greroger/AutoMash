@@ -108,6 +108,13 @@ Item {
             Layout.alignment: Qt.AlignLeft
         }
 
+        Button {
+            text: qsTr("Quit")
+            onClicked: {
+                Qt.quit()
+            }
+        }
+
         PumpPanel {
             pump: mashPump
             Layout.row: 2

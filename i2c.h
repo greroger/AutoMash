@@ -1,11 +1,16 @@
-#ifndef I2C_H
-#define I2C_H
+#pragma once
 
+#include <cstdint>
 
 class I2C
 {
 public:
-    I2C();
-};
+    I2C(uint8_t address);
+    ~I2C();
 
-#endif // I2C_H
+    uint16_t read(uint8_t addr);
+    void write(uint8_t addr, uint16_t data);
+private:
+    const uint8_t address;
+    int file;
+};

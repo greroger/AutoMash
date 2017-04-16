@@ -1,4 +1,5 @@
 #include <iostream>
+#include <thread>
 #include <QGuiApplication>
 #include <QtQml>
 
@@ -12,7 +13,7 @@ int main(int argc, char *argv[])
 
     QSettings settings;
 
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
     AutoMash automash;
